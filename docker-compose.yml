@@ -1,0 +1,38 @@
+services:
+  nginx:
+    container_name: nginx-eduwrench-wfinstances
+    build:
+      context: ./nginx
+      args:
+        NGINX_PORT: ${NGINX_PORT}
+        NGINX_SERVER_HOSTNAME_EDUWRENCH: ${NGINX_SERVER_HOSTNAME_EDUWRENCH}
+        NGINX_SERVER_HOSTNAME_WFINSTANCES: ${NGINX_SERVER_HOSTNAME_WFINSTANCES}
+        EDUWRENCH_FRONTEND_PORT: ${EDUWRENCH_FRONTEND_PORT}
+        EDUWRENCH_BACKEND_PORT: ${EDUWRENCH_BACKEND_PORT}
+        WFINSTANCES_UI_PORT: ${WFINSTANCES_UI_PORT}
+        WFINSTANCES_API_PORT: ${WFINSTANCES_API_PORT}
+    secrets:
+      - nginx_eduwrench_certificate
+      - nginx_eduwrench_private_key
+      - nginx_wfinstances_certificate
+      - nginx_wfinstances_private_key
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    networks:
+      - nginx-network
+
+secrets:
+  nginx_eduwrench_certificate:
+    file: ${NGINX_EDUWRENCH_SSL_CERTIFICATE_PATH:-/dev/null}
+  nginx_eduwrench_private_key:
+    file: ${NGINX_EDUWRENCH_SSL_PRIVATE_KEY_PATH:-/dev/null}
+  nginx_wfinstances_certificate:
+    file: ${NGINX_WFINSTANCES_SSL_CERTIFICATE_PATH:-/dev/null}
+  nginx_wfinstances_private_key:
+    file: ${NGINX_WFINSTANCES_SSL_PRIVATE_KEY_PATH:-/dev/null}
+
+networks:
+  nginx-network:
+    name: nginx-network
+    driver: bridge
+
