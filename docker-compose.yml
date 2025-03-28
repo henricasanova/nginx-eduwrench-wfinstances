@@ -18,6 +18,8 @@ services:
       - nginx_wfinstances_private_key
     ports:
       - ${NGINX_PORT}:${NGINX_PORT}
+    volumes:
+      - /home/:/home/
     networks:
       - nginx-network
 
