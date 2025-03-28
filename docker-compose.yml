@@ -19,7 +19,7 @@ services:
     ports:
       - ${NGINX_PORT}:${NGINX_PORT}
     volumes:
-      - /home/:/home/
+      - /home/public_html/:/home/public_html/
     networks:
       - nginx-network
 
